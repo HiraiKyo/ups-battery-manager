@@ -35,9 +35,8 @@ print("[LOG] Connecting to UPS power unit...")
 ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
 print("[LOG] Success.")
 
-# 接続成功時、Arduinoに成功通知
+# Arduino接続
 arduino_serial = serial.Serial(arduino_port, baudrate=baudrate, timeout=timeout)
-arduino_serial.write("TEST")
 
 # バッテリー監視
 print("[LOG] Watching battery status...")
@@ -48,7 +47,9 @@ while True:
   if is_low_battery == DCD_OUTPUT_BATTERY_LOW:
     # バッテリー残量が少ない事を示す
     print("[LOG] Battery Low. Sending a warning to the front ramp.")
-    arduino_serial.write("TEST")
+    arduino_serial.write(b"battery_status=0")
+  else: 
+    arduino_serial.write(b"battery_status=1")
   time.sleep(10)
 
 ser.close()    

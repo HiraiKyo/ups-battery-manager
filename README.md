@@ -12,6 +12,8 @@ Battery manager for UPS power unit by Nipron.
 
 - 10 秒ごとに残量確認と処理実行
 - シャットダウン回数、バッテリー購入日時から要交換アラート
+- `battery_status=1`: バッテリー充電あり
+- `battery_status=0`: バッテリー残量低下
 
 # 利用前設定方法
 
