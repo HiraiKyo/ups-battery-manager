@@ -27,12 +27,17 @@ port = inifile.get("Proto1", "PORT")
 timeout = int(inifile.get("Proto1", "TIMEOUT"))
 baudrate = int(inifile.get("Proto1", "BAUDRATE"))
 mode = inifile.get("Proto1", "MODE") # デバッグモード: debug, 通常:normal
+arduino_port = inifile.get("Proto1", "ARDUINO_PORT")
 print("[LOG] Success.")
 
 # UPS電源のシリアルポートを確認、接続
 print("[LOG] Connecting to UPS power unit...")
 ser = serial.Serial(port, baudrate=baudrate, timeout=timeout)
 print("[LOG] Success.")
+
+# 接続成功時、Arduinoに成功通知
+arduino_serial = serial.Serial(arduino_port, baudrate=baudrate, timeout=timeout)
+arduino_serial.write("TEST")
 
 # バッテリー監視
 print("[LOG] Watching battery status...")
@@ -43,6 +48,7 @@ while True:
   if is_low_battery == DCD_OUTPUT_BATTERY_LOW:
     # バッテリー残量が少ない事を示す
     print("[LOG] Battery Low. Sending a warning to the front ramp.")
+    arduino_serial.write("TEST")
   time.sleep(10)
 
 ser.close()    

@@ -1,4 +1,3 @@
-conda env create -f upsenv.yml
-conda activate upsenv
-conda install --yes --file requirements.txt
-python ./main.py
+#!/bin/sh
+cd /home/ros/ups-shutdowner
+/usr/bin/python ups-shutdowner.py
